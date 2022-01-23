@@ -5,6 +5,7 @@
    -  [**Java笔记**](_note/Java笔记.md)
    -  [**CS50 Web 开发**](_note/CS50Web开发.md)
    -  [**算法笔记**](_note/算法笔记.md)
+   -  [**算法(第四版)IntelliJ IDEA 配置环境搭建**](_note/算法(第四版)IntelliJ_IDEA配置环境搭建)
 
 - 开发必备
   
@@ -105,4 +106,4 @@
   - [**React.js官方文档**](https://reactjs.org/docs/getting-started.html)
   - [**Jenkins中文文档**](https://www.jenkins.io/zh/doc/)
 - 我的收藏
-  - [**Git中文教程**](https://git-scm.com/book/zh/v2)
+  - [**Micro_Frank-语雀**](https://www.yuque.com/frank-93a7b)
