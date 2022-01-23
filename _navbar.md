@@ -108,3 +108,8 @@
   - [**Jenkins中文文档**](https://www.jenkins.io/zh/doc/)
 - 我的收藏
   - [**Micro_Frank-语雀**](https://www.yuque.com/frank-93a7b)
+  - [**HTML超文本标记语言|MDN**](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
+  - [**Wd1x代码高亮**](http://word.wd1x.com/)
+  - [**计算机教育中缺失的一课**](https://missing-semester-cn.github.io/)
+  - [**Algorithms(4thEdition)**](https://algs4.cs.princeton.edu/home/)
+  - [**CMU ICS**](http://www.cs.cmu.edu/~./213/index.html)
