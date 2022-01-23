@@ -1,20 +1,70 @@
 # C/C++：从基础语法到优化策略
 [**视频地址**](https://www.bilibili.com/video/BV1Vf4y1P7pq)
+[**项目GitHub**](https://github.com/ShiqiYu/CPP)
+## Lecture 1
+
+![](images/2022-01-23-18-40-58.png)
+
+### gcc 常用代码
+```bash
+g++ Test.cpp --std=c++11 -o Test&&./Test
+```
+## Lecture 2
+
+### size_t
+
+* Computer memory keeps increasing
+
+* 32-bit int was enough in the past to for data length
+
+* But now it is not.
+
+* Unsigned integer
+
+* Type of the result of sizeof operator
+
+* Can store the maximum size of a theoretically possible object of any type
+
+* 32-bit, or 64-bit
+
+### Fixed width integer types (since C++11)
+<!-- <img src="images/2022-01-23-18-44-31.png" style="zoom: 33%;" /> -->
+![](images/2022-01-23-20-09-08.png )
+#### intmax.cpp
+
 ```cpp
-int8_t
+#include <iostream>
+#include <cstdint>
+using namespace std;
+int main()
+{
+    cout << "INT8_MAX=" << INT8_MAX << endl;
+}
+```
+* other examples
+
+```cpp
 6.02e23L // long double 
 6.02e23f // float 
 6.02e23 // double
-auto is placeholder type specifier. 
-The type of the variable will be deduced from its initializer.
+```
+* auto is placeholder type specifier. 
+* The type of the variable will be deduced from its initializer.
+```cpp
 auto a = 2; // type of a is int
 auto bc = 2.3; // type of b is double
 auto c ; //valid in C, error in C++
 auto d = a * 1.2; 
 auto a = 2; // type of a is int
-// will a be converted to a double type variable?
-a = 2.3; 
-// No! 2.3 will be converted to a int 2, then assigned to a
+```
+* Question: will a be converted to a double type variable?
+```cpp
+a = 2.3;
+```
+* No! 2.3 will be converted to a int 2, then assigned to a
+### Data type conversions
+#### conversion.cpp
+```cpp
 int num_int1 = 9; // initializing an int value to num_int1
 int num_int2 = 'C'; // implicit conversion 隐式类型转换 将8位转换为32位
 int num_int3 = (int)'C'; // explicit conversion, C-style
@@ -22,34 +72,53 @@ int num_int4 = int('C'); // explicit conversion, function style
 int num_int5 = 2.8; //implicit conversion
 float num_float = 2.3; //implicit conversion from double to float
 short num_short = 650000; 
-g++ Test.cpp --std=c++11 -o Test&&./Test
 ```
+## Lecture 3
+### Non-Boolean Expressions
+* They will be converted to bool implicitly if it is feasible.
 ```cpp
-They will be converted to bool implicitly if it is feasible.
 float count = 0.2f;
 if (count) //not recommend to use a float-point number
     cout << "There are some." << endl;
-
-Pointers are also frequently used as conditions
+```
+* Pointers are also frequently used as conditions
+```cpp
 int * p = new int[1024];
 if (!p) // if(p == NULL)
     cout << "Memory allocation failed." << endl;
+```
+## Lecture 4
+### Arrays of unknown size
+* The number is not specified in the declaration. 
+```cpp
+int num_array[ ] = {1, 2, 3, 4}; // the type of num_array is "array of 4 int"
+```
+* The arguments of a function
+```cpp
+float array_sum(float values[], size_t length);
+float array_sum(float *values, size_t length);
+```
+### Array-style strings
+* An array-style string (null-terminated strings/arrays of characters) is a series of characters stored in bytes in memory.
 
-float mysquare(float value)
-{
-    float result = 0.0f;
-    if(value >= 1.0f || value<= 0)
-    {
-        cerr << "The input is out of range." << endl;
-        goto EXIT_ERROR;
-    }
-    result = value * value;
-    return result;
-    EXIT_ERROR:
-    //do sth such as closing files here
-    return 0.0f;
-}
+* This kind of strings can be declared as follows
 
+#### initchar.cpp
+
+  数组类型的字符串要用\0来结束
+```cpp
+char rabbit[16] = {'P', 'e', 't', 'e', 'r'};
+char bad_pig[9] = {'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g’}; //a bad one!
+char good_pig[10] = {'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g', '\0'};
+```
+* size_t strlen( const char *str );
+Returns the number of characters, the first NULL will not be included.
+```cpp
+char name[10] = {'Y', 'u', '\0', 'S', '.', '0'};
+cout << strlen(name) << endl;
+```
+* 字符串的其它特点
+```cpp
 #include <iostream>
 using namespace std;
 int main()
@@ -66,19 +135,24 @@ int main()
         len ++;
     }
 }
-
-// 不检查边界是否超出
+```
+* 不检查边界是否超出
+```cpp
 int num_array[5]; 
 for(int idx = -1; idx <= 5; idx++)
     num_array[idx] = idx * idx;
 for(int idx = -1; idx <= 5; idx++)
     cout << num_array[idx] << endl;
-
+```
+* 多维数组的初始化
+```cpp
 void init_2d_array(float mat[][], //error
               size_t rows, size_t cols)
 void init_2d_array(float mat[][3], 
               size_t rows, size_t cols)
-
+```
+#### array_sum.cpp
+```cpp
 float array_sum(const float values[], size_t length)
 {
     float sum = 0.0f;
@@ -95,46 +169,56 @@ int main()
     float values[4] = {1.1f, 2.2f, 3.3f, 4.4f};
     float sum = array_sum(values, 4);
 }
-char rabbit[16] = {'P', 'e', 't', 'e', 'r'};
-char bad_pig[9] = {'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g’}; //a bad one!
-char good_pig[10] = {'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g', '\0'};
-// 数组类型的字符串要用\0来结束
-size_t strlen( const char *str );
-//Returns the number of characters, the first NULL will not be included.
+```
+
+```cpp
 const wchar_t[] s5 = L"ABCD"; 
 const char16_t[] s9 = u”ABCD"; //since C++11
 const char32_t[] s6 = U”ABCD"; //since C++11
-Copy
-	char* strcpy( char* dest, const char* src );
-Safer one:
-// count取dest与src的最小值
-	char *strncpy(char *dest, const char *src, size_t count);
-Concatenate: appends a copy of src to dest
-	char *strcat( char *dest, const char *src );
-Compare
-	int strcmp( const char *lhs, const char *rhs );
-Null-terminated strings are easy to be out of bound, and to cause problems.
-string class provides functions to manipulate and examinate strings.
+```
+
+### string.h
+* Copy
+```cpp
+char* strcpy( char* dest, const char* src );
+// Safer one: count取dest与src的最小值
+char *strncpy(char *dest, const char *src, size_t count);
+```
+* Concatenate: appends a copy of src to dest
+```cpp
+char *strcat( char *dest, const char *src );
+```
+* Compare
+```cpp
+int strcmp( const char *lhs, const char *rhs );
+```
+### string class
+
+* Null-terminated strings are easy to be out of bound, and to cause problems.
+* string class provides functions to manipulate and examinate strings.
+```cpp
 std::string str1 = "Hello";
 std::string str2 = "SUSTech";
 std::string result = str1 + ", " + str2;
-
-Different types of strings
+```
+* Different types of strings
+```cpp
 std::string 
 std::wstring 
 std::u8string //(C++20)
 std::u16string //(C++11)
 std::u32string //(C++11)
-string类没有越界检查
-
-结构体
+```
+* string类没有越界检查
+### struct
+```c
 struct Student{
     char name[4];
     int born;
     bool male; 
 };
-
 struct Student stu;
+
 strcpy(stu.name, "Yu");
 stu.born = 2000;
 stu.male = true;
@@ -143,10 +227,9 @@ struct Student stu = {"Yu", 2000, true};
 
 struct Student students[100];
 students[50].born = 2002; 
-
 ```
+### 求某个点的L1范数
 ```cpp
-L1范数
 #include <iostream>
 using namespace std;
 
@@ -212,7 +295,9 @@ int main()
     return 0;
 }
 ```
-
+### typedef
+* typedef can create an alias for a type.
+* It can be used to replace a possibly complex type name.
 ```cpp
 typedef int myint;
 
@@ -230,14 +315,14 @@ vec3b color = {255, 0, 255};
 
 rgb_struct rgb = {0, 255, 128};
 
-
 #if defined(_LP64) 
 typedef int wchar_t; 
 #else 
 typedef long wchar_t; 
 #endif
-
 ```
+## Lecture 5
+### Pointers
 ```cpp
 #include<iostream>
 using namespace std;
@@ -277,8 +362,7 @@ int main()
 
     cout << stu.name << " was born in " << stu.born 
          << ". Gender: " << (stu.male ? "male" : "female") << endl;
-
-
+    
     printf("Address of stu: %p\n", pStu); //C style
     cout << "Address of stu: " << pStu << endl; //C++ style
     cout << "Address of stu: " << &stu << endl;
@@ -324,10 +408,9 @@ p++;
 *p = 20;
 *(p-1) = 10;
 p[1] = 30;
-
 ```
+#### Arithmetic.cpp
 ```cpp
-Arithmetic.cpp
 #include <iostream>
 using namespace std;
 // 宏定义
@@ -355,19 +438,19 @@ int main()
     return 0;
 }
 ```
+### Memoey Allocation
 ```cpp
-Memoey Allocation
 //Allocate size bytes of uninitialized storage.
 void* malloc( size_t size )
 //Allocate 4 bytes and convert the pointer to (int *) explicitly.
 int * p1 = (int*) malloc (4);
-Question: 不好 仅针对这个例子没问题 只越界1个字节
+//Question: 不好 仅针对这个例子没问题 只越界1个字节
 int * p1 = (int*) malloc (3);
-
-Memory deallocation
+```
+### Memory leak
+```cpp
 // The dynamically allocated memory must be deallocated explicitly!
 void free( void* ptr );
-Question:
 // 此处内存泄漏了
 p = (int *) malloc(4 * sizeof(int));
 // ...
@@ -375,15 +458,15 @@ p = (int *) malloc(8 * sizeof(int));
 // ...
 free (p);
 
-
 void foo()
 {
     int* p = (int *) malloc( sizeof(int));
     // 释放内存前直接return 函数结束 内存泄漏
     return;
 } //memory leak
+```
 
-
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -414,6 +497,7 @@ int main()
 }
 // 申请1TB内存并没有崩溃 操作系统作了优化
 ```
+
 ```cpp
 // C++风格动态申请内存
 //allocate an int, default initializer (do nothing)
@@ -460,6 +544,7 @@ delete psa1;
 delete []psa2;
 
 ```
+## Lecture 6
 ### Return statement
 
 ```cpp
@@ -494,8 +579,8 @@ bool matrix_add(const Matrix & matA, const Matrix & matB, Matrix & matC)
     // do: matC = matA + matB
     // return true if everything is right
 }
-函数参数不要是占空间太大的数组，运行时要拷贝，消耗时间空间
 ```
+* 函数参数不要是占空间太大的数组，运行时要拷贝，消耗时间空间
 ### 内联函数与宏的对比
 
 ```cpp
@@ -542,7 +627,8 @@ int main()
 ### OpenCV 中为了跨平台对内联函数的定义
 ![image-20220121213207454](https://s2.loli.net/2022/01/21/ij324xYpSEshQZb.png)
 
-### 模板
+## Lecture 7
+### Function Templates
 ```cpp
 #include <iostream>
 #include <typeinfo>
@@ -555,19 +641,14 @@ T sum(T x, T y)
     return x +
      y;
 }
-// Explicitly instantiate
+```
+* Explicitly instantiate
+```cpp
 template double sum<double>(double, double);
-
-int main()
-{
-    auto val = sum(4.1, 5.2);
-    cout << val << endl;
-    return 0;
-}
-
 ```
 ### function-pointer
-
+* norm_ptr is a pointer, a function pointer.
+* The function should have two float parameters, and returns float.
 ```cpp
 #include <iostream>
 #include <cmath>
@@ -598,7 +679,8 @@ float norm_l2(float x, float y)
     return sqrt(x * x + y * y);
 }
 ```
-### A function pointer can be an argument and pass to a function.
+* A function pointer can be an argument and pass to a function.
+
 ```cpp
 <stdlib.h>
 
@@ -609,17 +691,16 @@ struct Point
 struct Person
 
 ```
-### 递归
+### Recursive Functions
 
-### Pros.
-Good at tree traversal
+* Pros.
+    * Good at tree traversal
 
-Less lines of source code
-### Cons.
-
-Consume more stack memory
-May be slow.
-Difficult to implement and debug
+    * Less lines of source code
+* Cons.
+    * Consume more stack memory
+    * May be slow.
+    * Difficult to implement and debug
 
 ### Some Tips on Optimization
 
@@ -634,15 +715,13 @@ Difficult to implement and debug
 * No printf()/cout in loops
 
 * Table lookup (sin(), cos() ...)
-
-SIMD, OpenMP
-SIMD: Single instruction, multiple data
-
-Intel: MMX, SSE, SSE2, AVX, AVX2, AVX512
-
-ARM: NEON
-
-RISC-V: RVV(RISC-V Vector Extension)
+## Lecture 8 C++ with ARM
+### 常见指令集
+* SIMD, OpenMP
+* SIMD: Single instruction, multiple data
+* Intel: MMX, SSE, SSE2, AVX, AVX2, AVX512
+* ARM: NEON
+* RISC-V: RVV(RISC-V Vector Extension)
 
 ```bash
 cat /proc/cpuinfo
@@ -673,11 +752,13 @@ if(OpenMP_CXX_FOUND)
     target_link_libraries(dotp PUBLIC OpenMP::OpenMP_CXX)
 endif()
 ```
-类的声明写在hpp里 写在类内的是inline function
 
+## Lecture 9
 ### student.hpp
 
-```C++
+类的声明写在hpp里 写在类内的是inline function
+
+```cpp
 class Student
 {
   private:
@@ -697,12 +778,11 @@ class Student
     void printInfo();
 };
 ```
-定义写在cpp里
-c++一般文件名都用小写
-
 ### stduent.cpp
 
-```C++
+定义写在cpp里 c++一般文件名都用小写
+
+```cpp
 void Student::setGender(bool isMale)
 {
     male = isMale;
@@ -715,11 +795,9 @@ void Student::printInfo()
 }
 
 ```
-### const Variables
+### const Variables Statements for constants
 
-### Statements for constants
-
-```C++
+```cpp
 #define VALUE 100
 const int value = 100;
 // 下面两行一个意思
@@ -733,7 +811,7 @@ void func(const int &);
 ```
 ### 静态函数与静态成员
 
-```C++
+```cpp
 #include <iostream>
 #include <cstring>
 
@@ -840,9 +918,11 @@ int main()
     return 0;
 }
 ```
-### Ex1
+## Lecture 10
+### Function overloading & Operator overloading
+#### Ex1
 
-```C++
+```cpp
 #pragma once
 #include <iostream>
 
@@ -882,7 +962,7 @@ class MyTime
     }
 };
 ```
-```C++
+```cpp
 MyTime operator+(int m) const
 {
     MyTime sum;
@@ -904,9 +984,9 @@ MyTime operator+(const std::string str) const
     return sum;
 }
 ```
-### 运算符的重载可以满足t1+20，不能满足20+t1，需要使用友元函数 
-
-```C++
+### friend Functions
+* 运算符的重载可以满足t1+20，不能满足20+t1，需要使用友元函数 
+```cpp
 class MyTime
 {
   // ...
@@ -917,8 +997,8 @@ class MyTime
     }
 };
 ```
-也可以类里边声名，类外边定义，不用加作用域标识符
-```C++
+* 也可以类里边声名，类外边定义，不用加作用域标识符
+```cpp
 class MyTime
 {
   // ...
@@ -931,6 +1011,7 @@ MyTime operator+(int m, const MyTime & t)
     return t + m;
 }
 ```
+
 ```cpp
 friend std::ostream & operator<<(std::ostream & os, const MyTime & t)
 {
@@ -947,7 +1028,7 @@ friend std::istream &operator>>(std::istream & is, MyTime & t)
     return is;
 }
 ```
-### 自定义强制类型转换 运算符的重载
+* 自定义强制类型转换 运算符的重载
 
 ```cpp
 // 隐式的implicit显式的explicit
@@ -994,8 +1075,8 @@ MyTime(int m): hours(0), minutes(m)
     }
 ```
 * 但实际上 Argument 专用于 Actual Argument（实际参数，实参），Parameter 专用于 Formal Parameter（形式参数，形参）。
-
-### Week11 Ex1 会导致内存泄漏 
+## Lecture 11
+### Ex1 会导致内存泄漏 
 
 ```cpp
 #pragma once
@@ -1112,17 +1193,19 @@ class MyString
     }
 };
 ```
-Smart pointers are used to make sure that an object can be deleted when it is no longer used. 😍
+### Smart-ptr
+* Smart pointers are used to make sure that an object can be deleted when it is no longer used. 😍
 
-Several shared pointers can share/point to the same object.
+* Several shared pointers can share/point to the same object.
 
-The object is destroyed when no shared_ptr points to it.
+* The object is destroyed when no shared_ptr points to it.
+
 ```cpp
 std::shared_ptr<MyTime> mt1(new MyTime(10));
 std::shared_ptr<MyTime> mt2 = mt1;
 auto mt1 = std::make_shared<MyTime>(1, 70);
 ```
-### shared-ptr
+* shared-ptr
 
 ```cpp
 #include <iostream>
@@ -1171,7 +1254,6 @@ class MyTime
     }
 };
 
-
 int main()
 {
     // std::shared_ptr<MyTime> mt0 = new MyTime(0,70); //error
@@ -1203,17 +1285,6 @@ int main()
     return 0;
 }
 ```
-### Tips
-
-Use size_t for mat.cols and mat.rows
-Use memcpy() to copy data. Element assignment has a lower efficiency.
-Use 1D array (float*) nor 2D array (float**) for matrix data.
-Redundant computation in loops
-Do parameter checking in functions: null pointers, dimension matching in matrix operations, etc
-Do not bind the create matrix function with file I/O.
-File name: head.h, source1.c, source2.c, source3.c
-Good implementation VS good homework
-
 ## Project 3: Matrix Structure and Multiplication in C
 
 **You can only use C, nor C++, in the project.** The project is an improvement of Project 2, but only `float` matrix structure is needed to implement.
@@ -1255,7 +1326,18 @@ Good implementation VS good homework
 1. You score will also depend on the quality of your source code and your report. Your report should be easy to understand and describe your work well, especially the highlights of your work.
 1. Please pay more attention to your code style. After all this is not ACM-ICPC contest. You have enough time to write code with both correct result and good code style. You will get deduction if your code style is terrible. You can read Google C++ Style Guide (http://google.github.io/styleguide/cppguide.html ) or some other guide for code style.
 
-### matrix.h
+### Tips
+* Use size_t for mat.cols and mat.rows
+* Use memcpy() to copy data. Element assignment has a lower efficiency.
+* Use 1D array (float*) nor 2D array (float**) for matrix data.
+* Redundant computation in loops
+* Do parameter checking in functions: null pointers, dimension matching in matrix operations, etc
+* Do not bind the create matrix function with file I/O.
+* File name: head.h, source1.c, source2.c, source3.c
+* Good implementation VS good homework
+### references
+
+#### matrix.h
 
 ```C
 #ifndef _MATRIX_H
@@ -1275,7 +1357,7 @@ bool add(const Matrix * input1, const Matrix * input2, Matrix *output);
 
 #endif
 ```
-### matrix.c
+#### matrix.c
 
 ```C
 #include <stdlib.h>
@@ -1407,7 +1489,7 @@ bool add(const Matrix * input1, const Matrix * input2, Matrix *output)
 }
 
 ```
-### main.c
+#### main.c
 
 ```C
 #include <stdio.h>
@@ -1442,7 +1524,7 @@ int main()
     return 0;
 }
 ```
-# 写代码时的套路
+## 写代码时的套路
 * 每次进入一个函数，先进行参数的检查，参数是否为null，参数的data是否为null，一般在创建时赋为null，方便检查
 
 * 如果为null，使用stderr打印错误信息
@@ -1455,20 +1537,26 @@ fprintf(stderr, "File %s,
 Line %d, Function %s(): The 1st parameter is NULL.\n",
 __FILE__, __LINE__, __FUNCTION__);
 ```
-### 比如add函数只做加法的工作，不要在add中申请内存,也不要将将计算结果赋给返回值
+* 比如add函数只做加法的工作，不要在add中申请内存,也不要将将计算结果赋给返回值
 
-### 使用bool类型的好处：进入函数先进行参数检查，如果出错直接返回false退出
+* 使用bool类型的好处：进入函数先进行参数检查，如果出错直接返回false退出
 
 ```C
 bool add(const Matrix * input1, const Matrix * input2, Matrix *output);
 ```
+## Lecture 12
+
+### Inheritance and Dynamic Memory Allocation
+
 If a base class uses dynamic memory allocation, and redefines a copy constructor and assignment operator
 
-Case 1: If no dynamic memory allocation in the derived class, no special operations are needed
+* Case 1: If no dynamic memory allocation in the derived class, no special operations are needed
 
-Case 2: if dynamic memory is allocated in the derived class, you should redefine a copy constructor and an assignment operator.
+* Case 2: if dynamic memory is allocated in the derived class, you should redefine a copy constructor and an assignment operator.
 
-### nonetypeparam.cpp
+## Lecture 13
+### Non-Type Parameters
+#### nonetypeparam.cpp
 
 ```cpp
 #include <iostream>
@@ -1539,7 +1627,8 @@ int main()
     return 0;
 }
 ```
-### specialization.cpp
+### Class Template Specialization
+#### specialization.cpp
 
 ```cpp
 #include <iostream>
@@ -1658,9 +1747,11 @@ int main()
     return 0;
 }
 ```
+## Lecture 14
+
 ### Output Stream and Error Stream
 
-### Send contents into streams in C and C++
+* Send contents into streams in C and C++
 ```cpp
 fprintf(stdout, "Info: ...\n", ...);
 printf("Info: ... \n", ...);
@@ -1672,9 +1763,9 @@ std::cout << "Info: ..." << std::endl;
 std::cerr << "Error: ..." << std::endl;
 
 ```
-### stderr.c
+* stderr.c
 
-```C
+```c
 #include <stdio.h>
 
 void div2(int n)
@@ -1698,7 +1789,7 @@ int main()
     return 0;
 }
 ```
-### stderr.cpp
+#### stderr.cpp
 
 ```cpp
 #include <iostream>
@@ -1743,9 +1834,12 @@ cat output.log
 rm *.log
 g++ assert.cpp -DNDEBUG
 ```
-### pipeline 
-### redirection
-### assert.cpp
+* pipeline 
+
+* redirection
+### assert
+
+#### assert.cpp
 
 ```cpp
 #include <iostream>
@@ -1759,7 +1853,8 @@ int main(int argc, char ** argv)
     return 0;
 }
 ```
-### 浮点数尽量不要用==
+* 浮点数尽量不要用==
+
 ```cpp
 float ratio(float a, float b)
 {
@@ -1791,7 +1886,8 @@ catch(int eid)
 {...}
 
 ```
-### error4.cpp
+### Error Handling
+#### error4.cpp
 
 ```cpp
 #include <iostream>
@@ -1864,7 +1960,7 @@ int main()
      return 0;
 }
 ```
-### nothrow.cpp
+#### nothrow.cpp
 
 ```cpp
 #include <iostream>
