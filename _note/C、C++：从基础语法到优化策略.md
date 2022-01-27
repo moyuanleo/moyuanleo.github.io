@@ -152,6 +152,7 @@ void init_2d_array(float mat[][3],
               size_t rows, size_t cols)
 ```
 #### array_sum.cpp
+
 ```cpp
 float array_sum(const float values[], size_t length)
 {
@@ -210,6 +211,7 @@ std::u16string //(C++11)
 std::u32string //(C++11)
 ```
 * string类没有越界检查
+
 ### struct
 ```c
 struct Student{
@@ -228,6 +230,7 @@ struct Student stu = {"Yu", 2000, true};
 struct Student students[100];
 students[50].born = 2002; 
 ```
+
 ### 求某个点的L1范数
 ```cpp
 #include <iostream>
@@ -298,6 +301,7 @@ int main()
 ### typedef
 * typedef can create an alias for a type.
 * It can be used to replace a possibly complex type name.
+
 ```cpp
 typedef int myint;
 
@@ -321,8 +325,10 @@ typedef int wchar_t;
 typedef long wchar_t; 
 #endif
 ```
+
 ## Lecture 5
 ### Pointers
+
 ```cpp
 #include<iostream>
 using namespace std;
@@ -335,6 +341,7 @@ int main()
     return 0;
 }
 ```
+
 ```cpp
 #include <iostream>
 #include <cstring>
@@ -375,6 +382,7 @@ int main()
     return 0;
 }
 ```
+
 ```cpp
 int num = 1;
 int another = 2;
@@ -409,7 +417,9 @@ p++;
 *(p-1) = 10;
 p[1] = 30;
 ```
+
 #### Arithmetic.cpp
+
 ```cpp
 #include <iostream>
 using namespace std;
@@ -439,6 +449,7 @@ int main()
 }
 ```
 ### Memoey Allocation
+
 ```cpp
 //Allocate size bytes of uninitialized storage.
 void* malloc( size_t size )
@@ -448,6 +459,7 @@ int * p1 = (int*) malloc (4);
 int * p1 = (int*) malloc (3);
 ```
 ### Memory leak
+
 ```cpp
 // The dynamically allocated memory must be deallocated explicitly!
 void free( void* ptr );
@@ -649,6 +661,7 @@ template double sum<double>(double, double);
 ### function-pointer
 * norm_ptr is a pointer, a function pointer.
 * The function should have two float parameters, and returns float.
+
 ```cpp
 #include <iostream>
 #include <cmath>
@@ -682,14 +695,11 @@ float norm_l2(float x, float y)
 * A function pointer can be an argument and pass to a function.
 
 ```cpp
-<stdlib.h>
-
 void qsort( void *ptr, size_t count, size_t size,
 int (*comp)(const void *,const void *));
 // To sort some customized types, such as 
-struct Point
-struct Person
-
+struct Point;
+struct Person;
 ```
 ### Recursive Functions
 
@@ -736,6 +746,7 @@ cmake ..
 make 
 cmake .. -DCMKE_BUILD_TYPE=Release
 ```
+
 ```cmake
 cmake_minimum_required(VERSION 3.12)
 
@@ -904,7 +915,7 @@ int main()
 ```
 ### string类 字符串连接
 
-```C++
+```cpp
 #include <iostream>
 #include <string>
 
@@ -962,6 +973,7 @@ class MyTime
     }
 };
 ```
+
 ```cpp
 MyTime operator+(int m) const
 {
@@ -973,7 +985,8 @@ MyTime operator+(int m) const
     return sum;
 }
 ```
-```C++
+
+```cpp
 MyTime operator+(const std::string str) const
 {
     MyTime sum = *this;
@@ -985,7 +998,8 @@ MyTime operator+(const std::string str) const
 }
 ```
 ### friend Functions
-* 运算符的重载可以满足t1+20，不能满足20+t1，需要使用友元函数 
+* 运算符的重载可以满足t1+20，不能满足20+t1，需要使用友元函数
+
 ```cpp
 class MyTime
 {
@@ -998,6 +1012,7 @@ class MyTime
 };
 ```
 * 也可以类里边声名，类外边定义，不用加作用域标识符
+
 ```cpp
 class MyTime
 {
@@ -1056,6 +1071,7 @@ MyTime(int m): hours(0), minutes(m)
     this->minutes %= 60;
 }
 ```
+
 ```cpp
 // prefix increment
     MyTime& operator++()
@@ -1335,11 +1351,12 @@ int main()
 * Do not bind the create matrix function with file I/O.
 * File name: head.h, source1.c, source2.c, source3.c
 * Good implementation VS good homework
-### references
+
+### References
 
 #### matrix.h
 
-```C
+```c
 #ifndef _MATRIX_H
 #define _MATRIX_H
 
@@ -1359,7 +1376,7 @@ bool add(const Matrix * input1, const Matrix * input2, Matrix *output);
 ```
 #### matrix.c
 
-```C
+```c
 #include <stdlib.h>
 #include <stdio.h>
 #include "matrix.h"
@@ -1491,7 +1508,7 @@ bool add(const Matrix * input1, const Matrix * input2, Matrix *output)
 ```
 #### main.c
 
-```C
+```c
 #include <stdio.h>
 #include "matrix.h"
 
@@ -1525,6 +1542,7 @@ int main()
 }
 ```
 ## 写代码时的套路
+
 * 每次进入一个函数，先进行参数的检查，参数是否为null，参数的data是否为null，一般在创建时赋为null，方便检查
 
 * 如果为null，使用stderr打印错误信息
@@ -1541,7 +1559,7 @@ __FILE__, __LINE__, __FUNCTION__);
 
 * 使用bool类型的好处：进入函数先进行参数检查，如果出错直接返回false退出
 
-```C
+```c
 bool add(const Matrix * input1, const Matrix * input2, Matrix *output);
 ```
 ## Lecture 12
@@ -1752,6 +1770,7 @@ int main()
 ### Output Stream and Error Stream
 
 * Send contents into streams in C and C++
+
 ```cpp
 fprintf(stdout, "Info: ...\n", ...);
 printf("Info: ... \n", ...);
@@ -1761,9 +1780,8 @@ fprintf(stderr, "Error: ...\n", ...);
 
 std::cout << "Info: ..." << std::endl;
 std::cerr << "Error: ..." << std::endl;
-
 ```
-* stderr.c
+#### stderr.c
 
 ```c
 #include <stdio.h>
@@ -1815,6 +1833,7 @@ int main()
     return 0;
 }
 ```
+
 ```bash
 less 文本文件查看器
 ./a.out | less
@@ -1837,7 +1856,7 @@ g++ assert.cpp -DNDEBUG
 * pipeline 
 
 * redirection
-### assert
+### Assert
 
 #### assert.cpp
 
@@ -1853,7 +1872,7 @@ int main(int argc, char ** argv)
     return 0;
 }
 ```
-* 浮点数尽量不要用==
+* 浮点数尽量不要用==    两个浮点数的差小于1e-8即可
 
 ```cpp
 float ratio(float a, float b)
