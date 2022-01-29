@@ -13,6 +13,7 @@
             - [ ] Floyd
 - [ ] PAT Basic Level
 - [ ] PAT Advanced Level
+    - [x] 1003
     - [x] 1020
     - [x] 1025
     - [x] 1032 
