@@ -1,5 +1,4 @@
 # C/C++：从基础语法到优化策略
-
 [**视频地址**](https://www.bilibili.com/video/BV1Vf4y1P7pq)
 [**项目GitHub**](https://github.com/ShiqiYu/CPP)
 [**Ubuntu Mirror**](https://mirrors.sustech.edu.cn/help/ubuntu.html#introduction)

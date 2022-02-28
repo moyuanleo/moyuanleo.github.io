@@ -3,7 +3,7 @@
 
 ## moyuanLeo
 
-[**联系作者**](https://space.bilibili.com/10740772)
+[**联系作者**](_note/contact.md)
 [**开启阅读**](README.md)
 
 
