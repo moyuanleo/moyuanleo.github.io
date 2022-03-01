@@ -1,3 +1,3 @@
 # Email: leoxuqiming@outlook.com
-# WeiChat:
+# WeChat:
 ![](images/contact.jpg)
