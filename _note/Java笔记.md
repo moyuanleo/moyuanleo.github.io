@@ -1,4 +1,4 @@
-# OOP Java
+OOP Java
 
 ## for each语句
 
@@ -1587,4 +1587,4 @@ public class NikeThread implements Runnable {
   - [Queue](#queue)
   - [静态本地变量](#静态本地变量)
 
-<!-- /code_chunk_output -->
+
