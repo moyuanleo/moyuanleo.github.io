@@ -5,6 +5,7 @@
 
   -  [**C++ 于仕琪**](_note/C、C++：从基础语法到优化策略.md)
   -  [**蓝桥杯**](_note/蓝桥杯.md)
+  -  [**LeetCode**](_note/LeetCode.md)
   -  [**PAT**](_note/PAT.md)
   -  [**Java笔记**](_note/Java笔记.md)
   -  [**CS50 Web 开发**](_note/CS50Web开发.md)
